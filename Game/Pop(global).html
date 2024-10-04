@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular_Global</title>
+    <link rel="stylesheet" href="../css/pop(global).css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Popular</h1>
+        <p>캐주얼 퍼즐게임</p>        
+        <span style="font-size: 0.7em;">ver.1.0.2</span><br>
+    </header>
+
+    <main>
+        <class="game-description">
+            <h2>게임 설명</h2>
+            <p>Popular은 셀을 클릭하여 점수를 얻는 캐주얼 퍼즐게임입니다. 최소한의 클릭으로 최대한의 점수를 얻어보세요!</p>        
+        <class="game-board">
+            <div class="popular-scoreboard">
+                <br><br>
+                <h2>게임 보드</h2>
+                <br><br>
+                <p>현재 점수: <span id="score">0</span></p>
+                <p>클릭 횟수: <span id="clickCount">0</span></p> <!-- New line for click count -->
+            </div>
+                        <div class="board-container">
+                <div id="popular-board">
+                    <!-- 게임 보드가 여기에 위치합니다 -->
+                </div>
+            </div>
+            <button onclick="shuffleBoard()" class="shuffle-button">
+                보드 재배열
+            </button>
+
+            <div class="button-container">
+                <a class="btn" id="ruleBookBtn">RuleBook /</a>
+          
+            <a class="btn" id="levelUpConditionsBtn">LevelUp</a>
+            </div>
+
+
+
+            <!-- 모달 구조 -->
+          
+    <div id="ruleBookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Rulebook</h2>
+            <br>
+            <br>
+            <p>셀을 클릭하면 셀과 인접한 같은 색 셀이 터지면서 점수를 획득합니다.</p>
+            <br>
+            <div class="grid">
+                <div class="cell a">A</div>
+                <div class="cell b">B</div>
+                <div class="cell b">B</div>
+                <div class="cell c">C</div>
+                <br>
+                <div class="cell d">D</div>
+                <div class="cell b">B</div>
+                <div class="cell b">B</div>
+                <div class="cell c">C</div>
+            </div>
+
+            첫번째 칸의 A를 클릭하면!<br>
+            A와 인접한 같은 A가 없기 때문에 A 하나만 터지면서 1점을 획득합니다! 
+            <br>
+
+            <hr> <!-- 경계선 추가 -->
+            다음 예시<br>
+            <div class="grid">
+                <div class="cell b">B</div>
+                <div class="cell b">B</div>
+            </div>
+            <br> 
+            이 경우, B를 클릭하면 인접한 B가 함께 터지면서 점수를 얻습니다.
+            <br><br> 
+            획득 스코어 = 3
+            <br> 
+            산정방식 = 1 + (1+1)
+
+            <hr> <!-- 경계선 추가 -->
+
+            <p>그 다음</p>
+            <br>
+            <div class="grid">
+                <div class="cell c">C</div>
+                <div class="cell c">C</div>
+                <div class="cell c">C</div>
+            </div>
+            <br> 
+            이 경우도, C를 클릭하면 인접한 C가 함께 터지면서 점수를 얻습니다.
+            <br><br> 
+            획득 스코어 = 6
+            <br> 
+            산정방식 = 1 + (1+1) + (1+1+1)
+            <br><br>
+            <hr> <!-- 경계선 추가 -->
+
+            처음 예시를 다시 살펴보면
+     
+            <div class="grid">
+                <div class="cell a">A</div>
+                <div class="cell b">B</div>
+                <div class="cell b">B</div>
+                <div class="cell c">C</div>
+                <br>
+                <div class="cell d">D</div>
+                <div class="cell b">B</div>
+                <div class="cell b">B</div>
+                <div class="cell c">C</div>
+            </div>
+            <p><strong>A:</strong> 1점<br>
+            <strong>B:</strong> 10점<br>
+            <strong>C:</strong> 6점<br>
+            <strong>D:</strong> 1점</p>
+
+            <hr> <!-- 경계선 추가 -->
+            Special Rule<br><br>
+            <p><strong>7개 이상</strong> +70점<br>
+                <strong>10개 이상</strong> +100점<br>
+                <strong>14개 이상</strong> +200점<br>
+                <strong>19개 이상</strong> +800점</p>
+    
+    
+
+        </div>
+        
+    </div>
+        
+    <!-- Level Up 조건 모달 -->
+    <div id="levelUpConditionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Level Up 조건</h2>
+            <p>다음 레벨로 올라가기 위해 필요한 조건:</p>
+            <ul>
+                <li>레벨 1에서 레벨 2로: 2000점</li>
+                <li>레벨 2에서 레벨 3로: 10000점</li>
+                <li>레벨 3은 최고 레벨입니다.</li>
+
+<br><br>
+                <li>레벨 1은 10번의 클릭으로 클리어 하는 것을 기준으로 제작되었습니다. 10번 클릭에 도전해보세요!</li>
+
+                <br><br>
+
+                <li>레벨 2는 20번의 클릭으로 클리어 하는 것을 기준으로 제작되었습니다. 10번 클릭에 도전해보세요!</li>
+
+            </ul>
+        </div>
+    </div>
+
+        </section>
+    </main>
+
+    <div class="button-container">               
+    <a class="btn btn-dark btn-xl text-center" style="width: 100px; height: autopx;" img src="../assets/img/Urb.png" a href="../index.html">Home </a>
+    </div>
+    
+            <!-- 레벨 설정 버튼 -->
+    <div class="level-buttons">
+        <button onclick="setLevel(1)">레벨 1</button>
+        <button onclick="setLevel(2)">레벨 2</button>
+        <button onclick="setLevel(3)">레벨 3</button>
+    </div>
+
+    <footer>
+        <p>© 2024 Utobit. </p>
+    </footer>
+    
+
+    <script>
+
+
+
+
+        // RuleBook 모달 열기 및 닫기 기능
+        var ruleBookModal = document.getElementById("ruleBookModal");
+        var ruleBookBtn = document.getElementById("ruleBookBtn");
+        var closeRuleBook = ruleBookModal.getElementsByClassName("close")[0];
+
+        ruleBookBtn.onclick = function() {
+            ruleBookModal.style.display = "block";
+        }
+
+        closeRuleBook.onclick = function() {
+            ruleBookModal.style.display = "none";
+        }
+
+        // Level Up 조건 모달 열기 및 닫기 기능
+        var levelUpConditionsModal = document.getElementById("levelUpConditionsModal");
+        var levelUpConditionsBtn = document.getElementById("levelUpConditionsBtn");
+        var closeLevelUpConditions = levelUpConditionsModal.getElementsByClassName("close")[0];
+
+        levelUpConditionsBtn.onclick = function() {
+            levelUpConditionsModal.style.display = "block";
+        }
+
+        closeLevelUpConditions.onclick = function() {
+            levelUpConditionsModal.style.display = "none";
+        }
+
+        // 모달 외부를 클릭하면 닫기
+        window.onclick = function(event) {
+            if (event.target == ruleBookModal) {
+                ruleBookModal.style.display = "none";
+            }
+            if (event.target == levelUpConditionsModal) {
+                levelUpConditionsModal.style.display = "none";
+            }
+        }
+
+
+        // 레벨 설정 함수
+        function setLevel(selectedLevel) {
+            level = selectedLevel;
+            alert('레벨 ' + level + '(으)로 설정되었습니다.');
+            initializeBoard(); // 보드를 초기화하여 새로운 레벨로 시작
+            levelUpConditionsModal.style.display = "none"; // 모달 닫기
+        }
+    </script>
+
+
+    <script src="../js/pop(global).js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+/* 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+.game-description, .game-board, .popular-scoreboard {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#popular-board {
+    display: grid;
+    grid-template-columns: repeat(12, 50px);
+    grid-template-rows: repeat(12, 50px);
+    gap: 5px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.crystal {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.selected {
+    border: 2px solid #ff0000;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px 5px rgba(255, 255, 0, 0.6);
+}
+
+/* 각 보석 클래스 스타일 */
+.a { background-color: #ffffff; }
+.b { background-color: #33FF57; }
+.c { background-color: #ff54e2; }
+.d { background-color: #33c9ff; }
+.e { background-color: #FFD433; }
+
+/* 보드 재배열 버튼 스타일 */
+.shuffle-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.shuffle-button:hover {
+    background-color: #555;
+}
+
+
+@keyframes flash {
+    0% { background-color: #fff; }
+    50% { background-color: #ff0; }
+    100% { background-color: #fff; }
+}
+
+.flash-effect {
+    animation: flash 0.5s ease-in-out 3; /* Example animation */
+}
+
+/* 레벨 업 메시지 스타일 */
+.level-up-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    text-align: center;
+    z-index: 1001; /* 높은 z-index로 오버레이 위에 표시 */
+}
+
+/* 클릭 방지 레이어 스타일 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* 보드 클릭을 막기 위해 높은 z-index 설정 */
+}
+
+
+   /* 보석 셀 스타일 */
+   .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 50px); /* 5x5 그리드 */
+    grid-gap: 5px;
+    margin: 20px auto;
+    width: max-content;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.level-buttons {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 10px; /* 버튼 사이의 간격 */
+    margin-top: 20px; /* 위쪽 여백 */
+}
+
+.level-buttons button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.level-buttons button:hover {
+    background-color: #0056b3;
+}

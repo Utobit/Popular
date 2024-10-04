@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>CustomMap</title>
+        <link href="../css/styles.css" rel="stylesheet" />
+        <script src="https://api.mapbox.com/styles/v1/saerok/cm1p7fvcd007i01pu1q6f07hf.html?title=view&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#12.67/37.025/127.48717/0/4"></script>
+        <script src="https://api.mapbox.com/styles/v1/saerok/cm1qlmnl600sr01rb662gerna.html?title=view&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#11.06/36.938/127.9712/-27.6/67"></script>
+        <script src="https://api.mapbox.com/styles/v1/saerok/cm1qmdx2f011r01rbhfavag84.html?title=copy&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#16.33/37.520893/126.91889/21.3/60"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+     
+        <style>
+            /* 프레임 같은 맵 컨테이너 */
+            #map-container {
+                width: 80%;
+                height: 840px; /* 필요에 따라 높이를 조정할 수 있습니다 */
+                margin: 20px auto;
+                padding: 10px;
+                border: 3px solid #ccc; /* 프레임 효과 */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 프레임 효과를 위한 그림자 */
+                background-color: white; /* 맵 컨테이너의 배경색 */
+                display: flex;
+                justify-content: space-between; /* 맵 간 간격을 고르게 유지 */
+                flex-wrap: wrap; /* 화면이 좁아지면 자동으로 줄 바꿈 */
+            }
+        
+            /* 프레임 내부의 맵 */
+            .map-frame {
+                width: 49%; /* 가로 크기를 세 개 나열할 수 있도록 조정 */
+                height: auto; /* 부모 컨테이너 높이에 맞춰 자동 조정 */
+                border: none; /* 기본 border 제거 */
+            }
+        
+            /* 창이 좁아졌을 때 지도가 세로로 쌓이도록 설정 */
+            @media (max-width: 900px) {
+                .map-frame {
+                    width: 100%; /* 100%로 변경하여 한 줄에 하나씩 표시 */
+                    height: auto; /* 높이를 줄여서 더 작은 화면에서도 잘 보이게 함 */
+                }
+            }
+
+            body { margin: 0; padding: 0; }
+            #map { width: 100%; height: 100vh; }
+            .custom-marker {
+    width: 5000px;
+    height: 5000px;
+    background-image: url('../assets/img/portfolio/bdbg.png'); /* 구글 드라이브 URL 변환 */
+    background-size: cover;
+    border-radius: 50%;
+}
+
+        </style>
+    </head>
+
+
+
+    <body id="page-top">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-maintop" href="#page-top">Custom Map</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#intro">Intro</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#custom">Custom</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#cord">Cord</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#share">Share</a></li>
+                        <li class="nav-item" style="width: 100px; height: auto;">
+                            <a href="../index.html" style="color: white; font-size: 16px; text-decoration: none;">Home</a>
+                        </li>                                               
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <header class="masthead2">
+            <div class="container">
+                <div class="masthead2-subheading">Welcome Our Website.</div>
+                <div class="masthead2-heading text">We create sharing</div>
+            </div>
+        </header>
+
+        <section class="page-section" id="intro">
+            <div class="container">
+                <div class="text-center">
+                    <h4 class="my-3">CustomMap</h4>
+                    <p class="text-muted">
+                        <br>이 페이지에서는 API를 응용해서 만들 수 있는 컨텐츠를 소개합니다.<br><br>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- mapbox 맵용 div -->
+            <div id="map-container" class="map-container">
+                <iframe src="https://api.mapbox.com/styles/v1/saerok/cm1p7fvcd007i01pu1q6f07hf.html?title=view&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#15.74/37.023054/127.498093/-27.3/70" title="EIA Career" class="map-frame"></iframe>
+                <iframe src="https://api.mapbox.com/styles/v1/saerok/cm1qlmnl600sr01rb662gerna.html?title=copy&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#11.06/36.938/127.9712/-27.6/67" title="Tracking" class="map-frame"></iframe>
+                </div>
+        </section>
+
+        <section class="page-section" id="intro">
+            <div class="container">
+                <div class="text-center">
+                    <div id="map-container">
+                        <div id="map"> <!-- 'map'이라는 ID로 지도를 표시 -->
+        <iframe width='100%' height='800px' src="https://api.mapbox.com/styles/v1/saerok/cm1qmdx2f011r01rbhfavag84.html?title=false&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=false#16.33/37.520893/126.91889/21.3/60" title="obj" style="border:none;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                </section>
+
+        <section class="page-section bg-light" id="custom">
+            <div class="container">
+                <div class="text-center">
+                    <div class="text-center">
+                        <h4 class="my-3">Custom</h4>
+                    </div>
+                    <p class="text-muted"><br><br><br>공공용 맵의 경우 vworld, 사적인 용도로 mapbox, 국내용으로 kakao나 naver 지도 등을 활용합니다.<br><br>첫번째 지도는 지금까지 제가 참여한 주요사업을 지도에 표기한 것이고, 보이기 위한 자료로 아직 반응형 요소와 마커, 내부 데이터를 넣지 않았습니다.<br><br>이런 용도로 사용할 수 있다! 정도로 보시면 좋으실 것 같습니다! <br><br>두번째 지도는 트래킹입니다. 여행지도라고 보셔도 되요! 지금 여행지도는 카카오, 네이버 등의 위치서비스를 이용하고 계신데요. Geo Cording을 다루게 되면 자기만의 지도를 커스텀해서 만들 수 있게 됩니다! 만들어서 공유해보세요! 내가 지금까지 여행한 모든 곳을 나만의 인터넷 지도로 남기는.... 서비스?의 개발도 고민중입니다.<br><br><br><br>마지막 맵은 api 지도 위에 3d 모델을 올리는 작업입니다. 이후에는 내부 데이터와 반응요소, 게임요소를 넣어 서비스를 염두하고 있습니다.<br><br>아무튼, 위처럼 어렵지 않은 방법으로 자신만의 커스텀지도를 만들고, 공유할 수 있으니, 한 번 도전해보세요! <br><br>지도 스크립트를 아래와 같이 공유합니다.</p>
+                </div>                
+                <br><br>
+                  <p class="text-center"><br> <br></p>          
+                </div>
+            </div>
+        </section>
+
+
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading"></h2>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer py-4">
+            <div class="container">
+                
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy; Utobit 2024</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="github"><i class="fab fa-github"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="youtube"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../js/script.js"></script>
+
+
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw';
+            const map = new mapboxgl.Map({
+                container: 'map', // 'map' ID로 된 컨테이너를 사용
+                style: 'mapbox://styles/saerok/cm1qmdx2f011r01rbhfavag84', // 스타일 URL
+                center: [126.9172, 37.5214], // 중심 좌표 [lng, lat]
+                zoom: 12 // 시작 줌 레벨
+            });
+        
+            let scene, camera, renderer, loader;
+            map.on('load', () => {
+                // WebGLRenderer를 사용하여 Three.js 장면 렌더링
+                renderer = new THREE.WebGLRenderer({
+                    alpha: true // 배경 투명도
+                });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement); // Three.js 캔버스를 body에 추가
+                
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.set(0, 0, 10); // 카메라 초기 위치 설정
+        
+                // GLTFLoader로 3D 모델 로드
+                loader = new THREE.GLTFLoader();
+                loader.load('untitled.gltf', (gltf) => {
+                    scene.add(gltf.scene); // GLTF 모델을 장면에 추가
+                });
+        
+                function animate() {
+                    requestAnimationFrame(animate);
+                    renderer.render(scene, camera); // Three.js 장면을 렌더링
+                }
+                animate(); // 애니메이션 루프 시작
+            });
+        
+            // 브라우저 창 크기 변경 시 Three.js 캔버스 크기 조정
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+  // 커스텀 HTML 요소를 사용해 마커 추가
+  const markerElement = document.createElement('div');
+    markerElement.className = 'custom-marker';
+
+    // 마커를 지도에 추가
+    new mapboxgl.Marker(markerElement)
+        .setLngLat([126.9172, 37.5214]) // 마커의 좌표 설정
+        .addTo(map);
+
+        </script>
+        
+
+    </body>
+</html>

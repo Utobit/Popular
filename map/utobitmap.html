@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Utobitmap</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; z-index: 0; }
+        .sidebar { position: absolute; top: 0; left: 0; height: 100%; width: 24.5%; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 20px; z-index: 2; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .menu-toggle { position: absolute; top: 10px; left: 10px; background-color: #333; color: white; padding: 10px; border-radius: 5px; cursor: pointer; z-index: 3; }
+        .watermark { position: absolute; bottom: 10px; right: 10px; font-size: 12px; color: #555; z-index: 1; }
+        .coordinates { position: absolute; bottom: 40px; right: 10px; font-size: 12px; color: #555; z-index: 2; }
+        .search-bar { position: absolute; top: 10px; right: 10px; z-index: 3; }
+        .search-bar input { padding: 5px; font-size: 14px; }
+        .search-bar button { padding: 5px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="sidebar" id="sidebar">
+    <h3><br></h3>
+    <p><label><input type="checkbox" id="toggleMapbox" checked disabled> Mapbox</label></p>
+    <p><label><input type="checkbox" id="toggleSatellite"> Google Satellite</label></p>
+</div>
+
+<div class="menu-toggle" id="menuToggle">
+    ☰ Menu
+</div>
+
+<div class="watermark">
+    © 2024 Utobit
+</div>
+
+<!-- 현재 위치 좌표를 표시할 영역 -->
+<div class="coordinates" id="coordinates">위치 좌표: </div>
+
+<!-- 좌표 검색 바 추가 -->
+<div class="search-bar">
+    <input type="text" id="lngInput" placeholder="경도 (Longitude)">
+    <input type="text" id="latInput" placeholder="위도 (Latitude)">
+    <button id="searchButton">좌표로 이동</button>
+</div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw';
+
+    // Mapbox 기본 맵 설정
+    var map = new mapboxgl.Map({
+        style: 'mapbox://styles/mapbox/dark-v10',
+        center: [126.9780, 37.5665], 
+        zoom: 15.5,
+        pitch: 60,  // 3D 건물 보이기 위한 피치 각도
+        bearing: -17.6,
+        container: 'map',
+        antialias: true,
+        attributionControl: false
+    });
+
+    // 지도 로드 후 3D 건물과 위성 레이어 설정
+    map.on('load', function () {
+        // 3D 건물 활성화
+        map.addLayer({
+            'id': '3d-buildings',
+            'source': 'composite',
+            'source-layer': 'building',
+            'filter': ['==', 'extrude', 'true'],
+            'type': 'fill-extrusion',
+            'minzoom': 15,
+            'paint': {
+                'fill-extrusion-color': '#aaa',
+                'fill-extrusion-height': [
+                    'interpolate', ['linear'], ['zoom'],
+                    15, 0,
+                    15.05, ['get', 'height']
+                ],
+                'fill-extrusion-base': [
+                    'interpolate', ['linear'], ['zoom'],
+                    15, 0,
+                    15.05, ['get', 'min_height']
+                ],
+                'fill-extrusion-opacity': 0.6
+            }
+        });
+    });
+        // Google 위성 지도 타일 추가
+        map.addSource('google-satellite', {
+            'type': 'raster',
+            'tiles': ['https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'],
+            'tileSize': 256,
+            'attribution': '© Google'
+        });
+        
+        map.addLayer({
+            'id': 'google-satellite-layer',
+            'type': 'raster',
+            'source': 'google-satellite',
+            'layout': { 'visibility': 'none' }
+        });
+
+    // Google Satellite 토글
+    document.getElementById('toggleSatellite').addEventListener('change', function() {
+        var visibility = map.getLayoutProperty('google-satellite-layer', 'visibility');
+        if (visibility === 'visible') {
+            map.setLayoutProperty('google-satellite-layer', 'visibility', 'none');
+        } else {
+            map.setLayoutProperty('google-satellite-layer', 'visibility', 'visible');
+        }
+    });
+
+    // 메뉴바 토글
+    document.getElementById('menuToggle').onclick = function() {
+        var sidebar = document.getElementById('sidebar');
+        if (sidebar.style.visibility === "visible") {
+            sidebar.style.opacity = 0;
+            sidebar.style.visibility = "hidden";
+        } else {
+            sidebar.style.opacity = 1;
+            sidebar.style.visibility = "visible";
+        }
+    };
+
+    // 오른쪽 상단의 내비게이션과 지오로케이트 컨트롤 추가
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-right');
+
+    var geolocate = new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showAccuracyCircle: false
+    });
+    map.addControl(geolocate, 'top-right');
+
+    // GPS를 사용한 실시간 위치 추적
+    var marker = new mapboxgl.Marker(); // 위치를 표시할 마커 생성
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.watchPosition(function(position) {
+            var lon = position.coords.longitude.toFixed(6); // 경도
+            var lat = position.coords.latitude.toFixed(6);  // 위도
+            document.getElementById('coordinates').textContent = `현재 위치 좌표: ${lat}, ${lon}`;
+
+            // 마커를 현재 위치에 배치하고 지도 중심 이동
+            marker.setLngLat([lon, lat]).addTo(map);
+            map.setCenter([lon, lat]);
+        }, function(error) {
+            console.error("GPS 오류 발생: ", error);
+        }, {
+            enableHighAccuracy: true, // 고정밀도 GPS 사용
+            timeout: 10000, // 타임아웃 설정
+            maximumAge: 0 // 캐시된 위치 정보 사용 금지
+        });
+    } else {
+        console.error("GPS를 사용할 수 없습니다.");
+    }
+
+    // 클릭한 위치의 좌표값을 출력
+    map.on('click', function(e) {
+        var clickedLng = e.lngLat.lng.toFixed(6); // 경도
+        var clickedLat = e.lngLat.lat.toFixed(6); // 위도
+        document.getElementById('coordinates').textContent = `클릭한 위치 좌표: ${clickedLat}, ${clickedLng}`;
+
+        // 마커를 클릭한 위치로 이동
+        marker.setLngLat([clickedLng, clickedLat]).addTo(map);
+    });
+
+    // 좌표 검색 기능 구현
+    document.getElementById('searchButton').addEventListener('click', function() {
+        var lng = parseFloat(document.getElementById('lngInput').value);
+        var lat = parseFloat(document.getElementById('latInput').value);
+
+        if (!isNaN(lng) && !isNaN(lat)) {
+            map.setCenter([lng, lat]); // 지도를 해당 좌표로 이동
+            marker.setLngLat([lng, lat]).addTo(map); // 마커도 해당 좌표로 이동
+        } else {
+            alert("올바른 좌표를 입력하세요.");
+        }
+    });
+
+</script>
+</body>
+</html>

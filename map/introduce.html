@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Introduce</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+        <link href="../css/styles.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.js"></script>
+        <script src="https://api.mapbox.com/styles/v1/saerok/cm1p7fvcd007i01pu1q6f07hf.html?title=view&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#12.67/37.025/127.48717/0/4"></script>
+<style>
+            
+        /* 프레임 같은 맵 컨테이너 */
+        #map-container {
+            width: 80%;
+            height: 840px; /* 필요에 따라 높이를 조정할 수 있습니다 */
+            margin: 20px auto;
+            padding: 10px;
+            border: 3px solid #ccc; /* 프레임 효과 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 프레임 효과를 위한 그림자 */
+            background-color: white; /* 맵 컨테이너의 배경색 */
+        }
+
+        /* 프레임 내부의 맵 */
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #gismap {
+        width: 100%;
+        height: 500px;  /* 맵을 보기 위한 적절한 높이 설정 */
+        }
+
+        /* 컨트롤 버튼 스타일 */
+        .control-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 주소 표시 */
+        #address {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 5px;
+            border-radius: 3px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
+
+        section {
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .section-content {
+            font-size: 16px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+    </style>
+
+
+
+    </head>
+    <body id="page-top" onload="init()">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html"><img src="../assets/img/Logo2.png" alt="..." /><span style="font-size: 0.8em;"></span>(Beta)</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="../index.html"> <img src="../assets/img/Urb.png" class="img-fluid" style="max-width: 20px; height: auto;"> 돌아가기</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../js/script.js"></script>
+    </body>
+    <header class="masthead">
+        <div class="container">
+        </header>
+        <section class="page-section" id="utobit">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Utobit!</h2>
+                
+                    <h3 class="section-subheading text-muted">Utobit는 혼자 시작한 프로젝트입니다. <br><br><br><br>데이터의 가장 작은 단위인 bit를 이용하고.<br> 또 우리가 bit가 되어... <br>우리가 사는 세계를 유토피아로 만들 수 있다는 생각입니다.</h3>
+                </div>
+            </section>
+
+
+            <section class="page-section" id="utobit">
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                         <div class="col-md-4">
+                            <span class="fa-stack fa-3x">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <h4 class="my-3">Path</h4>
+                            <p class="text-muted">Path to future<br><br> 미래는 과거로부터 현재까지 이어진 길의 연장선일 것입니다.<br>원인없는 결과가 없듯이, 나를 들여다봄으로써 미래를 볼 수 있을 거라는 생각입니다.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-3x">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-gamepad fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <h4 class="my-3">Game</h4>
+                            <p class="text-muted">Game Produce<br><br>6살. 제가 컴퓨터 게임을 처음 접한 나이이고, 10살. 제가 게임을 만들고 싶다고 마음을 먹은 나이입니다.<br>현대 게임은 문화예술 이상의 의미를 가진다고 생각합니다.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-3x">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-tools fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <h4 class="my-3">Branding</h4>
+                            <p class="text-muted">함께하고 싶은 팀. <br> <br> 혼자서는 우주선을 만들 수 없습니다.<br> utobit는 프로젝트팀의 형태로, 결과물을 만들어냅니다.<br><br>참여자 모두가 bit가 되어, 우주에서 영구히 관측되는 빛무리가 되도록 하겠습니다.<br><br>먼저 저 자신이 bit가 되어 프로젝트를 시작합니다. 제가 해온 일과 앞으로 갈 길에 대해서 말씀드리려고 합니다.</p>
+                        </div>
+                
+                    </div>
+                </div>
+            </section>
+            
+
+    
+    
+            <section class="page-section bg-light" id="projects">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-heading text-uppercase">Current Projects</h2>
+                        <h3 class="section-subheading text-muted">being developed at Utobit.</h3>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <h4 class="my-3">Project 1: Popular WebGame</h4>
+                            <p class="text-muted">
+                                <br>Popular Game is a casual puzzle game where players click cells to score points. 
+                                <br>Currently in testing, with various upgrades being implemented, including new features and a level system.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4 class="my-3">Project 2: Digital Twin Platform</h4>
+                            <p class="text-muted">
+                                <br>We are developing a real-time environmental simulation system using Digital Twin technology.
+                                <br>This system enables simulations by merging real and digital worlds.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4 class="my-3">Project 3: Metaverse Simulation</h4>
+                            <p class="text-muted">
+                                <br>We are working on a simulation system based on the Metaverse.
+                                <br>The system provides new experiences by reflecting real-time user location data.
+                                <br><br>    </p>
+                        </div>
+                        
+                        <div id="mapboxMap" style="width: 100%; height: 500px;" ></div>
+
+                    </div>
+                </div>
+            </section>
+            
+        
+
+    
+
+            <section class="page-section bg-dark text-white" id="past-projects">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-heading">has Walked</h2>
+                        <h3 class="section-subheading text-muted text-white">ProjectManager’s history.</h3>
+                    </div>
+                    <div class="row text-center">
+        
+                        <div class="col-md-6">
+                            <h4 class="my-3">Personal History</h4>
+                            <p class="text-muted text-white">
+                                <br>Log in 1995, Chungju-si, Republic of Korea.
+                                <br>Play the game 2001, CrazyAcade(Nexon) & StarCraft(Blizzard)
+                                <br>2003, arcade game(One coin All Clear...), 임진록壬辰錄, MUOnline Seeing, TopBlade, digimon cardgame.... etc...
+                                <br>2004, Break Out, Spider CardGame, Pinball etc...
+                                <br>2004, Kartrider(Nexon), MapleStory(Nexon), Cubix(Rom), Simcity(Rom)
+                                <br>2005, CrazyAcade&Starcraft, GrandChase(KOG)
+                                <br>2006, CrazyAcade(Guild Master)
+                                <br>2006~2007, Yogurting, Mabinogi
+                                <br>2008, StarCraft, Yugioh, warcraft(fight of cha.., Fate ext, etc...)
+                                <br><br>DEEP Play the game 2008~2010<br> StarCraft(Fish Server - Guild Master&Official Channel Guild Officer(10~50 people))
+                                <br>Fish Server(2008~2010), West(2009), Iccup(2009)
+                                <br>Op realize-(first guild), Op Index-(Guild Broadcast Match), Op Cre-(Official channel), Team&Fam Several groups, etc... Guild Management
+                                <br><br>DEEP Play the game 2011<br> League of Legend(CBT)
+                                <br>Position : Suporter, UserName : 여신루나(2011.Bronze~Gold), Pony R Rity(2013~Platinum.1(Winrate : 80%)), Dualu(2015~), 둘기라니박쥐(2022~), Saerok(2023~)
+                                <br>2013~ : HearthStone, HeeeeeOS!, Starcraft2, Overwatch, etc...
+                                <br>2018.11~2019. : Lost Ark(Giena_Summoner rank.8)
+                                <br>2020~2023 : Eternal Return(Beta~)
+                                <br>AutoChess, TFT(master(S6))
+                                <br><br>& Mobile game. <br><br>: MiniGameParadise, SnowRain, MySecretLove, etc... about 300
+                                <br><br>Deep Play the Mobile game : Million arthur(2year, server : korea, Japan), Guilty dragon(.hack : 천웅), Kingsraid(2017~2019 : 강신S), Epicseven, arknights, Azur Lane(bilibili_Chinese.ver), LastOrigin, etc(Blue Archive, Miniearth, <br>All mobile games being launched(2017~2020))...
+                                <br><br>And Game Design 2021~
+                                <br>Game Develop 2024~
+                                <br>Test WebGame Open 2024.08.
+                                <br>utobit Game lunching 2024.11~
+                            </p>
+                        </div>
+        
+
+
+                        <div class="col-md-6">
+                            <h4 class="my-3">Background</h4>
+                            <p class="text-muted text-white">
+                                <br>Elementary school(2001~2006), Daemi(1~2), Yesung(3), Namsan(4~6)
+                                <br>Middle school(2007~2009), Chungju MS(1~3)
+                                <br>High school(2010~2012), Chungju Science Core HS
+                                <br>Degree(2013.03~2019.02), Department of Environmental Engineering(Evening), Korea National University of Transportation
+                                <br>Completed Mandatory Military Service in Army, 2nd Security Group(2015~2016), 
+                            </p>
+                        </div>
+        
+                        <div class="col-md-6">
+                            <h4 class="my-3">Career</h4>
+                            <p class="text-muted text-white">
+                                <br>Student Worker, Department of Admissions : 2013.05 ~ 2015.02
+                                <br>ARMY : 2015.05 ~ 2017.02
+                                <br>Student Worker, Academic Affairs Office : 2017.05 ~ 2018
+                                <br>Contract Employee, ochang CMC : 2019.03 ~ 2019.05
+                                <br>Aspiring CEO, 2019.05~2019.07
+                                <br>Temporary Worker, Microbial Culture Center, Chungju Agricultural Technology Center, 2019.08 ~ 2020.01, 2020.10~ 2021.01
+                                <br>young Farmer, 2020.05 ~ 2020.09
+                                <br>Part-time Worker & Webnovelist, Mart(E-mart), Convenience Store, joara&Munpia, etc... 
+                                <br>Environment Engineer, Dongkuk Eng 2022.02~2023.04
+                                <br>forest management technician, Dongkuk Eng 2023.05~2023.09
+                                <br>forest management technician, Dongkuk forest Eng 2023.09~2023.10
+                                <br>Webnovelist : Saerok, Novelpia, 2023.11~2023.04
+                                <br>Aspiring UE developer With the help of GPT, 2024.04~2024.05
+                                <br>Environment Engineer, Ere E&C 2024.05 ~ NOW
+                                <br>Utobit 2024.08 ~ NOW
+                            </p>
+                        </div>
+        
+        
+                        <div class="col-md-6">
+                            <h4 class="my-3">Novelist</h4>
+                            <p class="text-muted text-white">
+                                <br>first wrote a novel in 2007
+                                <br>2012~ Name:Clus, internet novel, munpia, joara, naverwebnovel, comicalizing
+                                <br>2019~ Name:강신수, joara, munpia : Fantasy(60화_습작화), Fantasy(Adult)(80화_습작화)
+                                <br>2020~ Name:사탕중독, Novelpia(Romance&AdultFantasy)(80화,50화_습작화)
+                                <br>2023~ Name:새록, Novelpia(Romance&Fantasy)(40화완결)
+                                <br>2024~ Name:융용, Munpia(Wuxia)(20화 연재중지)
+                                <br>2024.04 hang up my pen & Game Develop & Unreal/Blender AnimationGame Start With Utobit                    
+                            </p>
+                        </div>
+                    </div>
+            </section>
+            <section class="page-section bg-light" id="projects">
+        </div>
+
+        <div class="container mt-5" style="margin-top: 50px;">
+            <div class="text-center">
+                <h2 class="section-heading"><br><br><br>EIA Career</h2>
+                <h3 class="section-subheading text-muted">offer Gis map<br></h3>
+            </div>
+        </div>
+        
+
+        <div id="map-container">
+            
+            
+<!-- mapbox 맵용 div -->
+        <iframe width='100%' height='800px' src="https://api.mapbox.com/styles/v1/saerok/cm1p7fvcd007i01pu1q6f07hf.html?title=false&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=false#12.67/37.025/127.48717/0/4" title="GeoCordingTest" style="border:none;"></iframe>    
+    </div>
+
+
+
+        <div class="row">
+            <h3 class="section-subheading text-muted" style="padding-left: 2em;">list<br>
+                            <br>동국기술단(2022.03~2023.02) 환경영향평가 등 약 60건 외 
+                            <br>01. 충주댐 사후환경영향조사 모니터링, 동국기술단
+                            <br>02. 수리태양광 발전단지 사후환경영향조사, 동국기술단
+                            <br>03. 화성시 양감면 용소리 835-12번지 공장부지 조성사업 소평, 지형지질, 동국기술단
+                            <br>04. 진천군 광혜원 개방형 다목적체육관 건립사업, 지형지질, 동국기술단
+                            <br>05. 음성군 삼성면 용대리 산20-3번지 일원 개간부지 조성사업 소평, 지형지질, 동국기술단
+                            <br>06. 안성시 보개면 남풍리 산361번지 일원 공장부지 조성사업 소평, 지역개황, 동국기술단
+                            <br>07. 음성군 대소면 성본리 산112-3번지 일원 공장 조성사업 소평, 지형지질, 동국기술단
+                            <br>08. 음성군 삼성면 양덕리 462-1번지 일원 창고부지 및 우량농지 진출입로 조성사업, 대기, 수질, 동국기술단
+                            <br>09. 증평군 증평읍 연탄리 15-1번지 일원 생활야구장 조성사업, 경관, 동국기술단
+                            <br>10. 여주시 세종대왕면 오계리 34-4번지 일원 창고시설 및 도로 조성사업 소평, 경관, 동국기술단
+                            <br>11. 안성시 양성면 석화리 산7-1번지 일원 공장부지 조성사업, 소음진동, 동국기술단
+                            <br>12. 양양군 강현면 주청리 87번지 일원 문화 및 집회시설 조성사업, 지역개황, 지형지질, 동국기술단
+                            <br>13. 서천공주선 북서천하이패스IC설치공사, 지형지질, 동국기술단
+                            <br>14. 안성시 일죽면 고은리503-1번지 일원 방송통신시설(드라마세트장)소평, 경관(시뮬레이션), 동국기술단
+                            <br>15. 안성시 일죽면 신흥리 산78-1번지 일원 근생 부지조성사업, 수질, 동국기술단
+                            <br>16. 여주시 가남읍 금당리 360-2번지 일원 근린생활시설 조성사업, 경관, 동국기술단
+                            <br>17. 음성군 맹동면 용촌리 산57번지 일원 공장부지 조성사업, 경관, 동국기술단
+                            <br>18. 옥천군 군북면 국원리 371번지 일원 태양광발전시설 부지조성사업, 소음진동, 동국기술단
+                            <br>19. 양양군 강현면 정암리 929-7번지 일원 동식물관련시설 조성사업, , 동국기술단
+                            <br>20. 음성군 감곡면 오향리 701-6번지 일원 창고부지 조성사업 소평, 수질, 동국기술단
+                            <br>21. 안성시 양성면 도곡리 87-3번지 일원 물류센터 조성사업, 수질, 일조분석, 동국기술단
+                            <br>22. 음성군 모래내 풍수해생활권 종합정비사업, 지형지질, 동국기술단
+                            <br>23. 음성군 감곡면 주천리 743번지 일원 동식물관련시설(작물재배사) 부지조성 소평, , 동국기술단
+                            <br>24. 안성시 죽산면 장능리 799-3번지 일원 물류창고 및 진입도로 조성사업 소평, 지형지질, 기타, 동국기술단
+                            <br>25. 평택시 서탄면 사리 산59번지 일원 공장부지 증설사업, 경관,수질, 동국기술단
+                            <br>26. 충주시 금가 유송마을 진입로 확포장공사(리도202호선), 수질, 동국기술단
+                            <br>27. 음성군 삼성면 양덕리 산53번지 일원 야영장 및 진입로 부지조성사업 소평, 지형지질, 동국기술단
+                            <br>28. 여주시 점동면 장안리 588번지 일원 공장부지, 제1종 근린생활시설 소평, 수질,경관, 동국기술단
+                            <br>29. 증평군 증평읍 연탄리 15-1번지 일원 생활야구장 조성사업, 경관, 동국기술단
+                            <br>30. 보은군 수한면 성리 산 59-1번지 일원 (주)청오산업 토석채취사업, 지형지질, 동국기술단
+                            <br>31. (주)이레산업 토석채취사업, 경관시뮬레이션, 동국기술단
+                            <br>32. (주)마루산업 토석채취사업, , 동국기술단
+                            <br>33. 생략
+
+                            <br><br>이레이앤씨(2024.05~now)
+                            <br>34. 2035 영월군관리계획(재정비) 수립 전략환경영향평가, 수질, 이레이앤씨
+                            <br>35. 강릉권역 하천기본계획 수립 전략환경영향평가, 수질/수리수문, 이레이앤씨
+                            <br>36. 철원군 농어촌도로 기본 및 정비계획 전략환경영향평가, 수질/수리수문 등, 이레이앤씨
+            </h3>
+</div>
+            </section>
+
+
+    
+            <script>
+                mapboxgl.accessToken = 'pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw';
+            
+                var map = new mapboxgl.Map({
+                    style: 'https://api.mapbox.com/styles/v1/saerok/cm1p7fvcd007i01pu1q6f07hf.html?title=view&access_token=pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw&zoomwheel=true&fresh=true#12.67/37.025/127.48717/0/4', // Brighter style for clearer view
+                    center: [126.9780, 37.5665],  // Centered on Seoul
+                    zoom: 12,  // Adjust zoom level for a broader view
+                    pitch: 0,  // Top-down view
+                    bearing: 0,  // No rotation for a flat view
+                    container: 'mapboxMap',  // Correct container ID for your map
+                    antialias: true,
+                    attributionControl: false
+                });
+            
+                map.on('load', function () {
+                    // 3D buildings can be optionally removed, but keeping them for now
+                    map.addLayer({
+                        'id': '3d-buildings',
+                        'source': 'composite',
+                        'source-layer': 'building',
+                        'filter': ['==', 'extrude', 'true'],
+                        'type': 'fill-extrusion',
+                        'minzoom': 15,
+                        'paint': {
+                            'fill-extrusion-color': '#aaa',
+                            'fill-extrusion-height': [
+                                'interpolate', ['linear'], ['zoom'],
+                                15, 0,
+                                15.05, ['get', 'height']
+                            ],
+                            'fill-extrusion-base': [
+                                'interpolate', ['linear'], ['zoom'],
+                                15, 0,
+                                15.05, ['get', 'min_height']
+                            ],
+                            'fill-extrusion-opacity': 0.6
+                        }
+                    });
+                });
+            </script>
+            
+            
+    
+<section class="page-section bg-dark text-white" id="past-projects">
+    <div class="container">
+        <div class="text-center"></div>
+        <div class="row text-center">                   
+        </div>
+
+        <!-- 이력 리스트 추가 -->
+        <div class="text-center mt-5">
+            <h3 class="section-subheading text-white">Path to the Future</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-dark text-white">2025: Launched the first collaborative web/app platform for engineers.</li>
+                <li class="list-group-item bg-dark text-white">2027: Developed an environment and disaster simulation using a physics engine.</li>
+                <li class="list-group-item bg-dark text-white">2029: Developed a user-location-based & real-time procedural generation mobile game.</li>
+            </ul>
+        </div>
+
+        
+        
+</section>
+
+
+<section class="page-section" id="utobit">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Utobit</h2>
+        
+          </div>
+
+
+
+<script>
+    // mapbox 초기화 코드
+    function initMapboxMap() {
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic2Flcm9rIiwiYSI6ImNtMWdueGpkbTA2ODIydm9nYm9qbmJvb2EifQ.y3Kujz1xeUhKMmXDJlnHLw';
+        var mapboxMap = new mapboxgl.Map({
+            container: 'mapboxMap',  // mapbox용 div 컨테이너
+            style: 'mapbox://styles/mapbox/dark-v10',
+            center: [126.9780, 37.5665],
+            zoom: 15.5,
+            pitch: 60,
+            bearing: -17.6,
+            antialias: true,
+            attributionControl: false
+        });
+
+        mapboxMap.on('load', function () {
+            mapboxMap.addLayer({
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 15,
+                'paint': {
+                    'fill-extrusion-color': '#aaa',
+                    'fill-extrusion-height': [
+                        'interpolate', ['linear'], ['zoom'],
+                        15, 0,
+                        15.05, ['get', 'height']
+                    ],
+                    'fill-extrusion-base': [
+                        'interpolate', ['linear'], ['zoom'],
+                        15, 0,
+                        15.05, ['get', 'min_height']
+                    ],
+                    'fill-extrusion-opacity': 0.6
+                }
+            });
+        });
+    }
+
+    // 페이지 로드 시 각각의 맵 초기화
+    window.onload = function() {
+        initMapboxMap();
+    };
+</script>
+
+
+    </section>
+
+
+        <section class="page-section bg-dark text-white" id="past-projects">
+            <div class="container">
+    
+                <!-- 이력 리스트 추가 -->
+                <div class="text-center mt-5">
+                    <h3 class="section-subheading text-white">dive into Bit utopia!</h3>
+                    </ul>
+                </div>
+                
+        </section>
+    
+    
+        <br>
+        <p class="text-center text-muted text-primary"><span style="font-size: 0.8em;"><br>  <br></span></p>
+    
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy; Utobit 2024</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </html>
