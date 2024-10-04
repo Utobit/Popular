@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Game</title>
+    <link rel="stylesheet" href="../css/popular.css">
+</head>
+<body>
+    <header>
+        <h1>Popular</h1>
+        <p>캐주얼 퍼즐게임</p>        
+        <span style="font-size: 0.7em;">ver.1.0.1</span><br>
+    </header>
+
+    <main>
+        <section class="game-description">
+            <h2>게임 설명</h2>
+            <p>Popular은 6x6 보드판에 보석을 배치하고, 라이브러리에 있는 수열을 완성하여 점수를 얻는 캐주얼 퍼즐게임입니다.</p>
+            <p>캐릭터, 원하는 아이돌, 소스 등을 자유롭게 배치하여 게임을 플레이 하세요!</p>
+        </section>
+        
+        <section class="game-board">
+            <h2><br>게임 보드<span style="font-size: 0.8em;">(Beta)</span></h2>
+        
+            <section class="popular-scoreboard">
+                <p>현재 점수: <span id="score">0</span></p>
+            </section>
+                <div class="board-container">
+                    <div id="popular-board">
+                        <!-- 게임 보드가 여기에 위치합니다 -->
+                    </div>
+                </div>
+            
+            <button onclick="shuffleBoard()" class="shuffle-button">
+                <alt="재배열" />
+                보드 재배열
+            </button>
+        </section>
+
+        <header>
+            <h1>Popular</h1>
+            <section class="familytree-list">
+                <h2>인덱스</h2>
+                <ul id="pattern-list">
+                    <div id="pattern-cards" class="pattern-cards">
+                            <div class="image-container">
+                                <!-- 여기에 이미지 여섯 개가 나열됩니다 -->
+                            </div>
+                            <p><span class="score"></span></p>
+                        </div>
+                        <!-- 패턴 카드가 여기에 동적으로 추가됩니다 -->
+                    </div>
+                </ul>
+            </section>
+        </header>
+    </main>
+    <div class="button-container">
+               
+        <a class="btn btn-dark btn-xl text-center" style="width: 100px; height: autopx;" img src="../assets/img/Urb.png" a href="../index.html">Home </a>
+        </div>
+    
+    <footer>
+        <p>© 2024 Utobit. All rights reserved.</p>
+    </footer>
+    
+    <script src="../js/familytree.js"></script> <!-- familytree.js 추가 -->
+    <script src="../js/script.js"></script> <!-- script.js 추가 -->
+    <script src="../js/pop(fans).js"></script> <!-- script.js 추가 -->
+</body>
+</html>
